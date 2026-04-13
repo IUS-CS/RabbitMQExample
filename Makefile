@@ -1,12 +1,12 @@
-all: send recv
+all: send/send recv/recv
 
 serve-rabbitmq:
 	docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:4-management
 
-serve-send: send
+serve-send: send/send
 	./send/send
 
-serve-recv: recv
+serve-recv: recv/recv
 	./recv/recv
 
 testmessage:
@@ -15,10 +15,10 @@ testmessage:
 person/person.pb.go: person.proto
 	protoc --go_out=./ person.proto
 
-send: send/send.go person/person.pb.go common/common.go
+send/send: send/send.go person/person.pb.go common/common.go
 	go build -o send send/send.go
 
-recv: recv/recv.go person/person.pb.go common/common.go
+recv/recv: recv/recv.go person/person.pb.go common/common.go
 	go build -o recv recv/recv.go
 
 rmq.pdf: rmq.typ

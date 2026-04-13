@@ -52,7 +52,12 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 
 	p := person.Person{}
 	p.SetName(rb.Name)
-	p.SetId(uuid.New().ID())
+	id, err := uuid.NewRandom()
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	p.SetId(id.String())
 	p.SetEmail(rb.Email)
 
 	body, err := proto.Marshal(&p)

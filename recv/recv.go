@@ -5,6 +5,7 @@ import (
 	"rmq/common"
 	"rmq/person"
 
+	"github.com/google/uuid"
 	"google.golang.org/protobuf/proto"
 )
 
@@ -35,7 +36,10 @@ func main() {
 			p := person.Person{}
 			err := proto.Unmarshal(d.Body, &p)
 			failOnError(err, "Failed to unmarshal")
-			log.Printf("Received a message: %s", p.String())
+			id, err := uuid.Parse(p.GetId())
+			failOnError(err, "Failed to parse id")
+			log.Printf("Received a message: Name: %s, Email: %s, ID: %s",
+				p.String(), p.GetEmail(), id)
 		}
 	}()
 
