@@ -21,7 +21,7 @@ send/send: send/send.go person/person.pb.go common/common.go
 recv/recv: recv/recv.go person/person.pb.go common/common.go
 	go build -o recv recv/recv.go
 
-rmq.pdf: rmq.typ
+rmq.pdf: rmq.typ send/send recv/recv
 	typst c rmq.typ
 
 clean:

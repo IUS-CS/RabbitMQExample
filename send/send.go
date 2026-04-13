@@ -42,7 +42,6 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 	rawBody := json.NewDecoder(r.Body)
 	err := rawBody.Decode(&rb)
 	if err != nil {
-		log.Printf("Error decoding request body: %s", err)
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
